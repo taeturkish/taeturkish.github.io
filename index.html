@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Siber Lanet Timi</title>
+  <style>
+    body {
+      background-color: #0d0d0d;
+      color: #00ff9f;
+      font-family: 'Courier New', monospace;
+      text-align: center;
+      padding: 50px 20px;
+      margin: 0;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px #00ff9f;
+    }
+
+    input, button, textarea {
+      background-color: #1a1a1a;
+      color: #00ff9f;
+      border: 1px solid #00ff9f;
+      padding: 10px;
+      margin: 10px 0;
+      width: 100%;
+      max-width: 300px;
+      font-size: 1em;
+      box-sizing: border-box;
+    }
+
+    button:hover {
+      cursor: pointer;
+      background-color: #00ff9f;
+      color: #1a1a1a;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .section {
+      margin-top: 40px;
+    }
+
+    .role {
+      font-weight: bold;
+      color: #00ffff;
+    }
+
+    #announcementBox, #questionBox {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    textarea {
+      resize: vertical;
+      height: 100px;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2em;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>SİBER LANET TİMİ</h1>
+
+  <div id="loginBox">
+    <p>Giriş için Key veya Şifre giriniz:</p>
+    <input type="text" id="keyInput" placeholder="Key / Şifre">
+    <br>
+    <button onclick="login()">Giriş Yap</button>
+  </div>
+
+  <div id="mainPanel" class="hidden">
+    <p>Giriş Yapan Rol: <span class="role" id="userRole"></span></p>
+
+    <div id="questionBox" class="section">
+      <h2>❓ Soru veya Hile Talebi Gönder</h2>
+      <textarea id="questionInput" placeholder="Sorunuzu veya isteğinizi buraya yazınız..."></textarea><br>
+      <button onclick="sendQuestion()">Gönder</button>
+    </div>
+
+    <div id="announcementBox" class="section hidden">
+      <h2>📢 Duyuru Yayınla</h2>
+      <textarea id="announcementInput" placeholder="Duyurunuzu buraya yazınız..."></textarea><br>
+      <button onclick="sendAnnouncement()">Yayınla</button>
+    </div>
+  </div>
+
+  <script>
+    const roles = {
+      "Zerlax": "👑 Siber Lider",
+      "Siber": "🔴 Siber Üye",
+      "Siber2013": "🦾 Siber Alfa",
+      "Siber2014": "🧑‍💻 Siber Yetkili",
+      "Siber2015": "🛡️ Koruyucu Lanet",
+      "Siber2016": "🎯 Operasyon Görevlisi",
+      "Siber2017": "👁️ İzci"
+    };
+
+    const allowedToAnnounce = ["Zerlax", "Siber2013", "Siber2014", "Siber2015", "Siber2016", "Siber2017"];
+
+    function login() {
+      const key = document.getElementById("keyInput").value.trim();
+      const role = roles[key];
+
+      if (role) {
+        document.getElementById("loginBox").classList.add("hidden");
+        document.getElementById("mainPanel").classList.remove("hidden");
+        document.getElementById("userRole").textContent = role;
+
+        if (allowedToAnnounce.includes(key)) {
+          document.getElementById("announcementBox").classList.remove("hidden");
+        }
+      } else {
+        alert("❌ Geçersiz Key veya Şifre!");
+      }
+    }
+
+    function sendAnnouncement() {
+      const content = document.getElementById("announcementInput").value.trim();
+      if (content) {
+        alert("✅ Duyuru gönderildi:\n\n" + content);
+        document.getElementById("announcementInput").value = "";
+      } else {
+        alert("⚠️ Duyuru boş olamaz!");
+      }
+    }
+
+    function sendQuestion() {
+      const question = document.getElementById("questionInput").value.trim();
+      if (question) {
+        alert("✅ Sorunuz alındı:\n\n" + question);
+        document.getElementById("questionInput").value = "";
+      } else {
+        alert("⚠️ Lütfen bir şey yazınız!");
+      }
+    }
+  </script>
+</body>
+</html>
